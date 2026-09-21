@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
+//italia
 
 @Composable
 fun BanderaJapon(modifier: Modifier = Modifier) {
