@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 
-                    BanderaEspana(
+                    BanderaAlemania(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
