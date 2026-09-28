@@ -6,14 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.example.banderas_max.ui.theme.BANDERAS_MAXTheme
 
 class MainActivity : ComponentActivity() {
@@ -23,7 +21,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-//alemania
                     BanderaAlemania(
                         modifier = Modifier.padding(innerPadding)
                     )
@@ -33,56 +30,28 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
-@Composable
-fun BanderaJapon(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(Color.White),
-        contentAlignment = Alignment.Center
-    ) {
-        Box(
-            modifier = Modifier
-                .size(120.dp)
-                .clip(CircleShape)
-                .background(Color.Red)
-        )
-    }
-}
-
-@Composable
-fun BanderaFrancia(modifier: Modifier = Modifier) {
-    Row(modifier = modifier.fillMaxSize()) {
-        Box(Modifier.weight(1f).fillMaxHeight().background(Color(0xFF0055A4)))
-        Box(Modifier.weight(1f).fillMaxHeight().background(Color.White))
-        Box(Modifier.weight(1f).fillMaxHeight().background(Color(0xFFEF4135)))
-    }
-}
-
-@Composable
-fun BanderaItalia(modifier: Modifier = Modifier) {
-    Row(modifier = modifier.fillMaxSize()) {
-        Box(Modifier.weight(1f).fillMaxHeight().background(Color(0xFF009246)))
-        Box(Modifier.weight(1f).fillMaxHeight().background(Color.White))
-        Box(Modifier.weight(1f).fillMaxHeight().background(Color(0xFFCE2B37)))
-    }
-}
-
 @Composable
 fun BanderaAlemania(modifier: Modifier = Modifier) {
-    Column(modifier = modifier.fillMaxSize()) {
-        Box(Modifier.weight(1f).fillMaxWidth().background(Color.Black))
-        Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFFDD0000)))
-        Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFFFFCE00)))
-    }
-}
+    ConstraintLayout(modifier = modifier.fillMaxSize()) {
+        val (negro, rojo, amarillo) = createRefs()
 
-@Composable
-fun BanderaEspana(modifier: Modifier = Modifier) {
-    Column(modifier = modifier.fillMaxSize()) {
-        Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFFAA151B)))
-        Box(Modifier.weight(2f).fillMaxWidth().background(Color(0xFFF1BF00)))
-        Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFFAA151B)))
+        val guia1 = createGuidelineFromTop(0.333f)
+        val guia2 = createGuidelineFromTop(0.666f)
+
+        Box(modifier = Modifier.fillMaxWidth().background(Color.Black).constrainAs(negro) {
+            top.linkTo(parent.top)
+            bottom.linkTo(guia1)
+            height = Dimension.fillToConstraints
+        })
+        Box(modifier = Modifier.fillMaxWidth().background(Color(0xFFDD0000)).constrainAs(rojo) {
+            top.linkTo(guia1)
+            bottom.linkTo(guia2)
+            height = Dimension.fillToConstraints
+        })
+        Box(modifier = Modifier.fillMaxWidth().background(Color(0xFFFFCE00)).constrainAs(amarillo) {
+            top.linkTo(guia2)
+            bottom.linkTo(parent.bottom)
+            height = Dimension.fillToConstraints
+        })
     }
 }
