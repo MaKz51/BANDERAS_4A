@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,7 +26,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaArgentinaConstraint(
+                    BanderaBrasil(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -34,25 +35,18 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun BanderaArgentinaConstraint(modifier: Modifier = Modifier) {
-    ConstraintLayout(modifier = modifier.fillMaxSize()) {
-        val (celeste1, blanco, celeste2, sol) = createRefs()
-        val g1 = createGuidelineFromTop(0.333f)
-        val g2 = createGuidelineFromTop(0.666f)
+val RombosShape = GenericShape { size, _ ->
+    moveTo(size.width / 2f, 0f)
+    lineTo(size.width, size.height / 2f)
+    lineTo(size.width / 2f, size.height)
+    lineTo(0f, size.height / 2f)
+    close()
+}
 
-        Box(Modifier.fillMaxWidth().background(Color(0xFF74ACDF)).constrainAs(celeste1) {
-            top.linkTo(parent.top); bottom.linkTo(g1); height = Dimension.fillToConstraints
-        })
-        Box(Modifier.fillMaxWidth().background(Color.White).constrainAs(blanco) {
-            top.linkTo(g1); bottom.linkTo(g2); height = Dimension.fillToConstraints
-        })
-        Box(Modifier.fillMaxWidth().background(Color(0xFF74ACDF)).constrainAs(celeste2) {
-            top.linkTo(g2); bottom.linkTo(parent.bottom); height = Dimension.fillToConstraints
-        })
-        Box(Modifier.size(50.dp).clip(CircleShape).background(Color(0xFFF6B40E)).constrainAs(sol) {
-            start.linkTo(parent.start); end.linkTo(parent.end)
-            top.linkTo(parent.top); bottom.linkTo(parent.bottom)
-        })
+@Composable
+fun BanderaBrasil(modifier: Modifier = Modifier) {
+    Box(modifier = modifier.fillMaxSize().background(Color(0xFF009B3A)), contentAlignment = Alignment.Center) {
+        Box(modifier = Modifier.fillMaxSize(0.75f).clip(RombosShape).background(Color(0xFFFEDF00)))
+        Box(modifier = Modifier.size(90.dp).clip(CircleShape).background(Color(0xFF002776)))
     }
 }
