@@ -35,15 +35,24 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun BanderaArgentina(modifier: Modifier = Modifier) {
-    Box(modifier = modifier.fillMaxSize()) {
-        Column(Modifier.fillMaxSize()) {
-            Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFF74ACDF)))
-            Box(Modifier.weight(1f).fillMaxWidth().background(Color.White))
-            Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFF74ACDF)))
-        }
-        Box(
-            modifier = Modifier.align(Alignment.Center).size(50.dp).clip(CircleShape).background(Color(0xFFF6B40E))
-        )
+fun BanderaArgentinaConstraint(modifier: Modifier = Modifier) {
+    ConstraintLayout(modifier = modifier.fillMaxSize()) {
+        val (celeste1, blanco, celeste2, sol) = createRefs()
+        val g1 = createGuidelineFromTop(0.333f)
+        val g2 = createGuidelineFromTop(0.666f)
+
+        Box(Modifier.fillMaxWidth().background(Color(0xFF74ACDF)).constrainAs(celeste1) {
+            top.linkTo(parent.top); bottom.linkTo(g1); height = Dimension.fillToConstraints
+        })
+        Box(Modifier.fillMaxWidth().background(Color.White).constrainAs(blanco) {
+            top.linkTo(g1); bottom.linkTo(g2); height = Dimension.fillToConstraints
+        })
+        Box(Modifier.fillMaxWidth().background(Color(0xFF74ACDF)).constrainAs(celeste2) {
+            top.linkTo(g2); bottom.linkTo(parent.bottom); height = Dimension.fillToConstraints
+        })
+        Box(Modifier.size(50.dp).clip(CircleShape).background(Color(0xFFF6B40E)).constrainAs(sol) {
+            start.linkTo(parent.start); end.linkTo(parent.end)
+            top.linkTo(parent.top); bottom.linkTo(parent.bottom)
+        })
     }
 }
