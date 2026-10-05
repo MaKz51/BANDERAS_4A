@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaMexicoConstraint(
+                    BanderaFranciaConstraint(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -35,24 +35,19 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun BanderaMexicoConstraint(modifier: Modifier = Modifier) {
+fun BanderaFranciaConstraint(modifier: Modifier = Modifier) {
     ConstraintLayout(modifier = modifier.fillMaxSize()) {
-        val (verde, blanco, rojo, escudo) = createRefs()
+        val (azul, blanco, rojo) = createRefs()
         val g1 = createGuidelineFromStart(0.333f)
         val g2 = createGuidelineFromStart(0.666f)
-
-        Box(Modifier.fillMaxHeight().background(Color(0xFF006341)).constrainAs(verde) {
+        Box(Modifier.fillMaxHeight().background(Color(0xFF0055A4)).constrainAs(azul) {
             start.linkTo(parent.start); end.linkTo(g1); width = Dimension.fillToConstraints
         })
         Box(Modifier.fillMaxHeight().background(Color.White).constrainAs(blanco) {
             start.linkTo(g1); end.linkTo(g2); width = Dimension.fillToConstraints
         })
-        Box(Modifier.fillMaxHeight().background(Color(0xFFCE1126)).constrainAs(rojo) {
+        Box(Modifier.fillMaxHeight().background(Color(0xFFEF4135)).constrainAs(rojo) {
             start.linkTo(g2); end.linkTo(parent.end); width = Dimension.fillToConstraints
-        })
-        Box(Modifier.size(50.dp).clip(CircleShape).background(Color(0xFFF6B40E)).constrainAs(escudo) {
-            start.linkTo(blanco.start); end.linkTo(blanco.end)
-            top.linkTo(blanco.top); bottom.linkTo(blanco.bottom)
         })
     }
 }
