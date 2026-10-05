@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaJaponNormal(
+                    BanderaMexicoNormal(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -35,8 +35,15 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun BanderaJaponNormal(modifier: Modifier = Modifier) {
-    Box(modifier = modifier.fillMaxSize().background(Color.White), contentAlignment = Alignment.Center) {
-        Box(modifier = Modifier.size(120.dp).clip(CircleShape).background(Color.Red))
+fun BanderaMexicoNormal(modifier: Modifier = Modifier) {
+    Row(modifier = modifier.fillMaxSize()) {
+        Box(Modifier.weight(1f).fillMaxHeight().background(Color(0xFF006341)))
+        Box(
+            modifier = Modifier.weight(1f).fillMaxHeight().background(Color.White),
+            contentAlignment = Alignment.Center
+        ) {
+            Box(Modifier.size(50.dp).clip(CircleShape).background(Color(0xFFF6B40E))) // Escudo
+        }
+        Box(Modifier.weight(1f).fillMaxHeight().background(Color(0xFFCE1126)))
     }
 }
