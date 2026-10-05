@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaColombiaConstraint(
+                    BanderaColombia(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -34,19 +34,10 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun BanderaColombiaConstraint(modifier: Modifier = Modifier) {
-    ConstraintLayout(modifier = modifier.fillMaxSize()) {
-        val (amarillo, azul, rojo) = createRefs()
-        val gMedio = createGuidelineFromTop(0.50f)
-        val gInferior = createGuidelineFromTop(0.75f)
-        Box(Modifier.fillMaxWidth().background(Color(0xFFFFCD00)).constrainAs(amarillo) {
-            top.linkTo(parent.top); bottom.linkTo(gMedio); height = Dimension.fillToConstraints
-        })
-        Box(Modifier.fillMaxWidth().background(Color(0xFF003087)).constrainAs(azul) {
-            top.linkTo(gMedio); bottom.linkTo(gInferior); height = Dimension.fillToConstraints
-        })
-        Box(Modifier.fillMaxWidth().background(Color(0xFFC8102E)).constrainAs(rojo) {
-            top.linkTo(gInferior); bottom.linkTo(parent.bottom); height = Dimension.fillToConstraints
-        })
+fun BanderaColombia(modifier: Modifier = Modifier) {
+    Column(modifier = modifier.fillMaxSize()) {
+        Box(Modifier.weight(2f).fillMaxWidth().background(Color(0xFFFFCD00)))
+        Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFF003087)))
+        Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFFC8102E)))
     }
 }
