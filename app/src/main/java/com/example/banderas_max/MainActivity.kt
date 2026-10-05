@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaUSA(
+                    BanderaUSAConstraint(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -35,13 +35,25 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun BanderaUSA(modifier: Modifier = Modifier) {
-    Box(modifier = modifier.fillMaxSize()) {
-        Column(Modifier.fillMaxSize()) {
+fun BanderaUSAConstraint(modifier: Modifier = Modifier) {
+    ConstraintLayout(modifier = modifier.fillMaxSize()) {
+        val (franjas, canton) = createRefs()
+        val guiaAncho = createGuidelineFromStart(0.4f)
+        val guiaAlto = createGuidelineFromTop(0.54f)
+
+        Column(modifier = Modifier.fillMaxSize().constrainAs(franjas) {
+            top.linkTo(parent.top); bottom.linkTo(parent.bottom)
+            start.linkTo(parent.start); end.linkTo(parent.end)
+        }) {
             repeat(13) { index ->
                 Box(Modifier.weight(1f).fillMaxWidth().background(if (index % 2 == 0) Color(0xFFB22234) else Color.White))
             }
         }
-        Box(modifier = Modifier.fillMaxWidth(0.4f).fillMaxHeight(0.54f).background(Color(0xFF3C3B6E)))
+
+        Box(modifier = Modifier.background(Color(0xFF3C3B6E)).constrainAs(canton) {
+            top.linkTo(parent.top); bottom.linkTo(guiaAlto)
+            start.linkTo(parent.start); end.linkTo(guiaAncho)
+            width = Dimension.fillToConstraints; height = Dimension.fillToConstraints
+        })
     }
 }
