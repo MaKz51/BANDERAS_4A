@@ -35,25 +35,9 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun BanderaEspana(modifier: Modifier = Modifier) {
-    ConstraintLayout(modifier = modifier.fillMaxSize()) {
-        val (rojoSup, amarillo, rojoInf) = createRefs()
-        val guiaTop = createGuidelineFromTop(0.25f)
-        val guiaBottom = createGuidelineFromTop(0.75f)
-
-        Box(modifier = Modifier.fillMaxWidth().background(Color(0xFFAA151B)).constrainAs(rojoSup) {
-            top.linkTo(parent.top)
-            bottom.linkTo(guiaTop)
-            height = Dimension.fillToConstraints
-        })
-        Box(modifier = Modifier.fillMaxWidth().background(Color(0xFFF1BF00)).constrainAs(amarillo) {
-            top.linkTo(guiaTop)
-            bottom.linkTo(guiaBottom)
-            height = Dimension.fillToConstraints
-        })
-        Box(modifier = Modifier.fillMaxWidth().background(Color(0xFFAA151B)).constrainAs(rojoInf) {
-            top.linkTo(guiaBottom)
-            bottom.linkTo(parent.bottom)
-            height = Dimension.fillToConstraints
-        })
+    Column(modifier = modifier.fillMaxSize()) {
+        Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFFAA151B)))
+        Box(Modifier.weight(2f).fillMaxWidth().background(Color(0xFFF1BF00)))
+        Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFFAA151B)))
     }
 }
