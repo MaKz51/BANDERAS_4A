@@ -32,26 +32,9 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun BanderaAlemania(modifier: Modifier = Modifier) {
-    ConstraintLayout(modifier = modifier.fillMaxSize()) {
-        val (negro, rojo, amarillo) = createRefs()
-
-        val guia1 = createGuidelineFromTop(0.333f)
-        val guia2 = createGuidelineFromTop(0.666f)
-
-        Box(modifier = Modifier.fillMaxWidth().background(Color.Black).constrainAs(negro) {
-            top.linkTo(parent.top)
-            bottom.linkTo(guia1)
-            height = Dimension.fillToConstraints
-        })
-        Box(modifier = Modifier.fillMaxWidth().background(Color(0xFFDD0000)).constrainAs(rojo) {
-            top.linkTo(guia1)
-            bottom.linkTo(guia2)
-            height = Dimension.fillToConstraints
-        })
-        Box(modifier = Modifier.fillMaxWidth().background(Color(0xFFFFCE00)).constrainAs(amarillo) {
-            top.linkTo(guia2)
-            bottom.linkTo(parent.bottom)
-            height = Dimension.fillToConstraints
-        })
+    Column(modifier = modifier.fillMaxSize()) {
+        Box(Modifier.weight(1f).fillMaxWidth().background(Color.Black))
+        Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFFDD0000)))
+        Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFFFFCE00)))
     }
 }
