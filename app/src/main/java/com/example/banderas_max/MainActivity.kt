@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -24,7 +25,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaColombiaConstraint(
+                    BanderaArgentina(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -34,19 +35,15 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun BanderaColombiaConstraint(modifier: Modifier = Modifier) {
-    ConstraintLayout(modifier = modifier.fillMaxSize()) {
-        val (amarillo, azul, rojo) = createRefs()
-        val gMedio = createGuidelineFromTop(0.50f)
-        val gInferior = createGuidelineFromTop(0.75f)
-        Box(Modifier.fillMaxWidth().background(Color(0xFFFFCD00)).constrainAs(amarillo) {
-            top.linkTo(parent.top); bottom.linkTo(gMedio); height = Dimension.fillToConstraints
-        })
-        Box(Modifier.fillMaxWidth().background(Color(0xFF003087)).constrainAs(azul) {
-            top.linkTo(gMedio); bottom.linkTo(gInferior); height = Dimension.fillToConstraints
-        })
-        Box(Modifier.fillMaxWidth().background(Color(0xFFC8102E)).constrainAs(rojo) {
-            top.linkTo(gInferior); bottom.linkTo(parent.bottom); height = Dimension.fillToConstraints
-        })
+fun BanderaArgentina(modifier: Modifier = Modifier) {
+    Box(modifier = modifier.fillMaxSize()) {
+        Column(Modifier.fillMaxSize()) {
+            Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFF74ACDF)))
+            Box(Modifier.weight(1f).fillMaxWidth().background(Color.White))
+            Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFF74ACDF)))
+        }
+        Box(
+            modifier = Modifier.align(Alignment.Center).size(50.dp).clip(CircleShape).background(Color(0xFFF6B40E))
+        )
     }
 }
