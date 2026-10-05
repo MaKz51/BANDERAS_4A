@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaBrasil(
+                    BanderaBrasilConstraint(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -44,9 +44,16 @@ val RombosShape = GenericShape { size, _ ->
 }
 
 @Composable
-fun BanderaBrasil(modifier: Modifier = Modifier) {
-    Box(modifier = modifier.fillMaxSize().background(Color(0xFF009B3A)), contentAlignment = Alignment.Center) {
-        Box(modifier = Modifier.fillMaxSize(0.75f).clip(RombosShape).background(Color(0xFFFEDF00)))
-        Box(modifier = Modifier.size(90.dp).clip(CircleShape).background(Color(0xFF002776)))
+fun BanderaBrasilConstraint(modifier: Modifier = Modifier) {
+    ConstraintLayout(modifier = modifier.fillMaxSize().background(Color(0xFF009B3A))) {
+        val (rombo, circulo) = createRefs()
+        Box(modifier = Modifier.fillMaxSize(0.75f).clip(RombosShape).background(Color(0xFFFEDF00)).constrainAs(rombo) {
+            start.linkTo(parent.start); end.linkTo(parent.end)
+            top.linkTo(parent.top); bottom.linkTo(parent.bottom)
+        })
+        Box(modifier = Modifier.size(90.dp).clip(CircleShape).background(Color(0xFF002776)).constrainAs(circulo) {
+            start.linkTo(parent.start); end.linkTo(parent.end)
+            top.linkTo(parent.top); bottom.linkTo(parent.bottom)
+        })
     }
 }
