@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaCubaConstraint(
+                    BanderaSeychelles(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -56,17 +56,11 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun BanderaCubaConstraint(modifier: Modifier = Modifier) {
-    ConstraintLayout(modifier.fillMaxSize()) {
-        val (franjas, triangulo, estrella) = createRefs()
-        Column(Modifier.fillMaxSize().constrainAs(franjas) { centerTo(parent) }) {
-            for (i in 0..4) Box(Modifier.weight(1f).fillMaxWidth().background(if (i % 2 == 0) Color(0xFF002E6E) else Color.White))
-        }
-        Box(Modifier.fillMaxHeight().clip(TrianguloDerShape).background(Color(0xFFCB1428)).constrainAs(triangulo) {
-            start.linkTo(parent.start); width = Dimension.percent(0.45f)
-        })
-        Icon(Icons.Filled.Star, contentDescription = null, tint = Color.White, modifier = Modifier.size(50.dp).constrainAs(estrella) {
-            start.linkTo(parent.start, margin = 30.dp); top.linkTo(parent.top); bottom.linkTo(parent.bottom)
-        })
+fun BanderaSeychelles(modifier: Modifier = Modifier) {
+    Box(modifier.fillMaxSize().background(Color(0xFF007A3D)), contentAlignment = Alignment.BottomStart) {
+        Box(Modifier.scale(2f).rotate(-15f).fillMaxSize().background(Color.White))
+        Box(Modifier.scale(2f).rotate(-35f).fillMaxSize().background(Color(0xFFD92223)))
+        Box(Modifier.scale(2f).rotate(-55f).fillMaxSize().background(Color(0xFFFCD116)))
+        Box(Modifier.scale(2f).rotate(-75f).fillMaxSize().background(Color(0xFF003F87)))
     }
 }
