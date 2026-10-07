@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaTurquiaConstraint(
+                    BanderaIsrael(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -56,17 +56,15 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun BanderaTurquiaConstraint(modifier: Modifier = Modifier) {
-    ConstraintLayout(modifier.fillMaxSize().background(Color(0xFFE30A17))) {
-        val (lunaB, lunaR, estrella) = createRefs()
-        Box(Modifier.size(120.dp).clip(CircleShape).background(Color.White).constrainAs(lunaB) {
-            centerTo(parent); horizontalBias = 0.35f
-        })
-        Box(Modifier.size(100.dp).clip(CircleShape).background(Color(0xFFE30A17)).constrainAs(lunaR) {
-            centerTo(parent); horizontalBias = 0.45f
-        })
-        Icon(Icons.Filled.Star, contentDescription = null, tint = Color.White, modifier = Modifier.size(40.dp).rotate(15f).constrainAs(estrella) {
-            centerTo(parent); horizontalBias = 0.65f
-        })
+fun BanderaIsrael(modifier: Modifier = Modifier) {
+    Column(modifier.fillMaxSize().background(Color.White), verticalArrangement = Arrangement.SpaceEvenly) {
+        Box(Modifier.weight(1f))
+        Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFF0038B8)))
+        Box(Modifier.weight(3f).fillMaxWidth(), contentAlignment = Alignment.Center) {
+            Box(Modifier.size(100.dp).border(8.dp, Color(0xFF0038B8), TrianguloArrShape))
+            Box(Modifier.size(100.dp).border(8.dp, Color(0xFF0038B8), TrianguloAbaShape))
+        }
+        Box(Modifier.weight(1f).fillMaxWidth().background(Color(0xFF0038B8)))
+        Box(Modifier.weight(1f))
     }
 }
