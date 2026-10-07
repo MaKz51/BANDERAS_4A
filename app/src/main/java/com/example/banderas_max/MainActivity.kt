@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaIsraelConstraint(
+                    BanderaCuba(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -56,16 +56,13 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun BanderaIsraelConstraint(modifier: Modifier = Modifier) {
-    ConstraintLayout(modifier.fillMaxSize().background(Color.White)) {
-        val (fTop, fBot, estrella1, estrella2) = createRefs()
-        Box(Modifier.fillMaxWidth().background(Color(0xFF0038B8)).constrainAs(fTop) {
-            top.linkTo(parent.top, margin = 30.dp); height = Dimension.percent(0.15f)
-        })
-        Box(Modifier.fillMaxWidth().background(Color(0xFF0038B8)).constrainAs(fBot) {
-            bottom.linkTo(parent.bottom, margin = 30.dp); height = Dimension.percent(0.15f)
-        })
-        Box(Modifier.size(100.dp).border(8.dp, Color(0xFF0038B8), TrianguloArrShape).constrainAs(estrella1) { centerTo(parent) })
-        Box(Modifier.size(100.dp).border(8.dp, Color(0xFF0038B8), TrianguloAbaShape).constrainAs(estrella2) { centerTo(parent) })
+fun BanderaCuba(modifier: Modifier = Modifier) {
+    Box(modifier.fillMaxSize()) {
+        Column(Modifier.fillMaxSize()) {
+            for (i in 0..4) Box(Modifier.weight(1f).fillMaxWidth().background(if (i % 2 == 0) Color(0xFF002E6E) else Color.White))
+        }
+        Box(Modifier.fillMaxWidth(0.45f).fillMaxHeight().clip(TrianguloDerShape).background(Color(0xFFCB1428)), contentAlignment = Alignment.CenterStart) {
+            Icon(Icons.Filled.Star, contentDescription = null, tint = Color.White, modifier = Modifier.padding(start = 30.dp).size(50.dp))
+        }
     }
 }
