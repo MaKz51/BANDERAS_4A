@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaSeychelles(
+                    BanderaSeychellesConstraint(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -56,11 +56,12 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun BanderaSeychelles(modifier: Modifier = Modifier) {
-    Box(modifier.fillMaxSize().background(Color(0xFF007A3D)), contentAlignment = Alignment.BottomStart) {
-        Box(Modifier.scale(2f).rotate(-15f).fillMaxSize().background(Color.White))
-        Box(Modifier.scale(2f).rotate(-35f).fillMaxSize().background(Color(0xFFD92223)))
-        Box(Modifier.scale(2f).rotate(-55f).fillMaxSize().background(Color(0xFFFCD116)))
-        Box(Modifier.scale(2f).rotate(-75f).fillMaxSize().background(Color(0xFF003F87)))
+fun BanderaSeychellesConstraint(modifier: Modifier = Modifier) {
+    ConstraintLayout(modifier.fillMaxSize().background(Color(0xFF007A3D))) {
+        val (b, r, y, bl) = createRefs()
+        Box(Modifier.scale(2f).rotate(-15f).background(Color.White).constrainAs(b) { bottom.linkTo(parent.bottom); start.linkTo(parent.start); width = Dimension.matchParent; height = Dimension.matchParent })
+        Box(Modifier.scale(2f).rotate(-35f).background(Color(0xFFD92223)).constrainAs(r) { bottom.linkTo(parent.bottom); start.linkTo(parent.start); width = Dimension.matchParent; height = Dimension.matchParent })
+        Box(Modifier.scale(2f).rotate(-55f).background(Color(0xFFFCD116)).constrainAs(y) { bottom.linkTo(parent.bottom); start.linkTo(parent.start); width = Dimension.matchParent; height = Dimension.matchParent })
+        Box(Modifier.scale(2f).rotate(-75f).background(Color(0xFF003F87)).constrainAs(bl) { bottom.linkTo(parent.bottom); start.linkTo(parent.start); width = Dimension.matchParent; height = Dimension.matchParent })
     }
 }
