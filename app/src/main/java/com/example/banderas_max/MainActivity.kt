@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaSuizaConstraint(
+                    BanderaSuiza(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -56,14 +56,9 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun BanderaSuizaConstraint(modifier: Modifier = Modifier) {
-    ConstraintLayout(modifier.aspectRatio(1f).background(Color(0xFFD52B1E))) {
-        val (v, h) = createRefs()
-        Box(Modifier.background(Color.White).constrainAs(v) {
-            centerTo(parent); width = Dimension.percent(0.2f); height = Dimension.percent(0.6f)
-        })
-        Box(Modifier.background(Color.White).constrainAs(h) {
-            centerTo(parent); width = Dimension.percent(0.6f); height = Dimension.percent(0.2f)
-        })
+fun BanderaSuiza(modifier: Modifier = Modifier) {
+    Box(modifier.aspectRatio(1f).background(Color(0xFFD52B1E)), contentAlignment = Alignment.Center) {
+        Box(Modifier.fillMaxWidth(0.2f).fillMaxHeight(0.6f).background(Color.White))
+        Box(Modifier.fillMaxHeight(0.2f).fillMaxWidth(0.6f).background(Color.White))
     }
 }
