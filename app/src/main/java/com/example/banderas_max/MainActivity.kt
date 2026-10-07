@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaCuba(
+                    BanderaCubaConstraint(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -56,13 +56,17 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun BanderaCuba(modifier: Modifier = Modifier) {
-    Box(modifier.fillMaxSize()) {
-        Column(Modifier.fillMaxSize()) {
+fun BanderaCubaConstraint(modifier: Modifier = Modifier) {
+    ConstraintLayout(modifier.fillMaxSize()) {
+        val (franjas, triangulo, estrella) = createRefs()
+        Column(Modifier.fillMaxSize().constrainAs(franjas) { centerTo(parent) }) {
             for (i in 0..4) Box(Modifier.weight(1f).fillMaxWidth().background(if (i % 2 == 0) Color(0xFF002E6E) else Color.White))
         }
-        Box(Modifier.fillMaxWidth(0.45f).fillMaxHeight().clip(TrianguloDerShape).background(Color(0xFFCB1428)), contentAlignment = Alignment.CenterStart) {
-            Icon(Icons.Filled.Star, contentDescription = null, tint = Color.White, modifier = Modifier.padding(start = 30.dp).size(50.dp))
-        }
+        Box(Modifier.fillMaxHeight().clip(TrianguloDerShape).background(Color(0xFFCB1428)).constrainAs(triangulo) {
+            start.linkTo(parent.start); width = Dimension.percent(0.45f)
+        })
+        Icon(Icons.Filled.Star, contentDescription = null, tint = Color.White, modifier = Modifier.size(50.dp).constrainAs(estrella) {
+            start.linkTo(parent.start, margin = 30.dp); top.linkTo(parent.top); bottom.linkTo(parent.bottom)
+        })
     }
 }
