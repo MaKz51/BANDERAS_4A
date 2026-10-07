@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaTurquia(
+                    BanderaTurquiaConstraint(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -56,10 +56,17 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun BanderaTurquia(modifier: Modifier = Modifier) {
-    Box(modifier.fillMaxSize().background(Color(0xFFE30A17)), contentAlignment = Alignment.Center) {
-        Box(Modifier.offset(x = (-30).dp).size(120.dp).clip(CircleShape).background(Color.White))
-        Box(Modifier.offset(x = (-10).dp).size(100.dp).clip(CircleShape).background(Color(0xFFE30A17)))
-        Icon(Icons.Filled.Star, contentDescription = null, tint = Color.White, modifier = Modifier.offset(x = 30.dp).size(40.dp).rotate(15f))
+fun BanderaTurquiaConstraint(modifier: Modifier = Modifier) {
+    ConstraintLayout(modifier.fillMaxSize().background(Color(0xFFE30A17))) {
+        val (lunaB, lunaR, estrella) = createRefs()
+        Box(Modifier.size(120.dp).clip(CircleShape).background(Color.White).constrainAs(lunaB) {
+            centerTo(parent); horizontalBias = 0.35f
+        })
+        Box(Modifier.size(100.dp).clip(CircleShape).background(Color(0xFFE30A17)).constrainAs(lunaR) {
+            centerTo(parent); horizontalBias = 0.45f
+        })
+        Icon(Icons.Filled.Star, contentDescription = null, tint = Color.White, modifier = Modifier.size(40.dp).rotate(15f).constrainAs(estrella) {
+            centerTo(parent); horizontalBias = 0.65f
+        })
     }
 }
