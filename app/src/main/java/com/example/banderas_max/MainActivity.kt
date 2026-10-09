@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaSudafrica(
+                    BanderaSudafricaConstraint(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -77,14 +77,17 @@ fun LienzoSudafrica() {
 }
 
 @Composable
-fun BanderaSudafrica(modifier: Modifier = Modifier) = Box(modifier) { LienzoSudafrica() }
+fun BanderaSudafricaConstraint(modifier: Modifier = Modifier) = ConstraintLayout(modifier) {
+    val (l) = createRefs()
+    Box(Modifier.constrainAs(l){ centerTo(parent) }) { LienzoSudafrica() }
+}
 
 @Preview(showBackground = true)
 @Composable
 fun VistaPreviaBandera() {
     BANDERAS_MAXTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
-            BanderaSudafrica()
+            BanderaSudafricaConstraint()
         }
     }
 }
