@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaButan(
+                    BanderaButanConstraint(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -71,14 +71,15 @@ fun LienzoButan() {
     }
 }
 
-@Composable fun BanderaButan(modifier: Modifier = Modifier) = Box(modifier) { LienzoButan() }
-
+@Composable fun BanderaButanConstraint(modifier: Modifier = Modifier) = ConstraintLayout(modifier) {
+    val (l) = createRefs(); Box(Modifier.constrainAs(l){ centerTo(parent) }) { LienzoButan() }
+}
 @Preview(showBackground = true)
 @Composable
 fun VistaPreviaBandera() {
     BANDERAS_MAXTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
-            BanderaButan()
+            BanderaButanConstraint()
         }
     }
 }
