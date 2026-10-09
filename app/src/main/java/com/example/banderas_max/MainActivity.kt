@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaKiribati(
+                    BanderaKiribatiConstraint(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -90,14 +90,15 @@ fun LienzoKiribati() {
     }
 }
 
-@Composable fun BanderaKiribati(modifier: Modifier = Modifier) = Box(modifier) { LienzoKiribati() }
-
+@Composable fun BanderaKiribatiConstraint(modifier: Modifier = Modifier) = ConstraintLayout(modifier) {
+    val (l) = createRefs(); Box(Modifier.constrainAs(l){ centerTo(parent) }) { LienzoKiribati() }
+}
 @Preview(showBackground = true)
 @Composable
 fun VistaPreviaBandera() {
     BANDERAS_MAXTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
-            BanderaKiribati()
+            BanderaKiribatiConstraint()
         }
     }
 }
