@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaNepalConstraint(
+                    BanderaKiribati(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -49,37 +49,55 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
 @Composable
-fun LienzoNepal() {
-    Canvas(modifier = Modifier.width(240.dp).height(290.dp)) {
-        val mid = size.height / 2f
+fun LienzoKiribati() {
+    Canvas(modifier = Modifier.fillMaxSize()) {
+        drawRect(color = Color(0xFFCE1126), size = Size(size.width, size.height / 2f))
 
-        drawPath(Path().apply {
-            moveTo(0f, 0f); lineTo(size.width * 0.92f, size.height * 0.40f); lineTo(size.width * 0.25f, size.height * 0.40f)
-            lineTo(size.width * 0.92f, size.height * 0.85f); lineTo(0f, size.height); close()
-        }, color = Color(0xFF003893))
+        val alturaFranja = (size.height / 2f) / 6f
+        for (i in 0 until 6) {
+            val colorFranja = if (i % 2 == 0) Color.White else Color(0xFF003F87)
+            drawRect(
+                color = colorFranja,
+                topLeft = Offset(0f, (size.height / 2f) + (i * alturaFranja)),
+                size = Size(size.width, alturaFranja)
+            )
+        }
 
-        drawPath(Path().apply {
-            moveTo(size.width * 0.05f, size.height * 0.05f)
-            lineTo(size.width * 0.80f, size.height * 0.38f); lineTo(size.width * 0.20f, size.height * 0.38f)
-            lineTo(size.width * 0.80f, size.height * 0.82f); lineTo(size.width * 0.05f, size.height * 0.95f); close()
-        }, color = Color(0xFFDC143C))
+        val cx = size.width / 2f
+        val cy = size.height / 2f
+        val radioSol = size.height * 0.18f
 
-        drawCircle(Color.White, radius = size.height * 0.06f, center = Offset(size.width * 0.25f, size.height * 0.25f))
-        drawCircle(Color.White, radius = size.height * 0.08f, center = Offset(size.width * 0.25f, size.height * 0.65f))
+        drawArc(
+            color = Color(0xFFFFCE00),
+            startAngle = 180f,
+            sweepAngle = 180f,
+            useCenter = true,
+            topLeft = Offset(cx - radioSol, cy - radioSol),
+            size = Size(radioSol * 2, radioSol * 2)
+        )
+
+        val avePath = Path().apply {
+            moveTo(cx, size.height * 0.16f) // Pico central arriba
+            lineTo(size.width * 0.65f, size.height * 0.25f) // Punta ala derecha
+            lineTo(cx + size.width * 0.03f, size.height * 0.20f) // Grosor interno derecho
+            lineTo(cx, size.height * 0.21f) // Pico central abajo
+            lineTo(cx - size.width * 0.03f, size.height * 0.20f) // Grosor interno izquierdo
+            lineTo(size.width * 0.35f, size.height * 0.25f) // Punta ala izquierda
+            close()
+        }
+        drawPath(avePath, color = Color(0xFFFFCE00))
     }
 }
 
-@Composable fun BanderaNepalConstraint(modifier: Modifier = Modifier) = ConstraintLayout(modifier) {
-    val (l) = createRefs(); Box(Modifier.constrainAs(l){ centerTo(parent) }) { LienzoNepal() }
-}
+@Composable fun BanderaKiribati(modifier: Modifier = Modifier) = Box(modifier) { LienzoKiribati() }
+
 @Preview(showBackground = true)
 @Composable
 fun VistaPreviaBandera() {
     BANDERAS_MAXTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
-            BanderaNepalConstraint()
+            BanderaKiribati()
         }
     }
 }
