@@ -44,7 +44,7 @@ fun Path.addStar(center: Offset, radiusOut: Float, radiusIn: Float, points: Int 
 fun VistaPreviaBandera() {
     BANDERAS_MAXTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
-            BanderaPNGConstraint()
+            BanderaUK()
         }
     }
 }
@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaPNGConstraint(
+                    BanderaUK(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -63,19 +63,19 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
 @Composable
-fun LienzoPNG() {
+fun LienzoUK() {
     Canvas(modifier = Modifier.fillMaxSize()) {
-        drawRect(Color.Black)
-        drawPath(Path().apply { moveTo(0f, 0f); lineTo(size.width, 0f); lineTo(size.width, size.height); close() }, Color(0xFFCE1126))
-        drawPath(Path().apply { addStar(Offset(size.width * 0.25f, size.height * 0.3f), 40f, 15f) }, Color.White)
-        drawPath(Path().apply { addStar(Offset(size.width * 0.35f, size.height * 0.5f), 30f, 12f) }, Color.White)
-        drawPath(Path().apply { addStar(Offset(size.width * 0.25f, size.height * 0.7f), 40f, 15f) }, Color.White)
-        drawPath(Path().apply { addStar(Offset(size.width * 0.15f, size.height * 0.5f), 40f, 15f) }, Color.White)
-
-        val ave = Path().apply { moveTo(size.width * 0.75f, size.height * 0.2f); lineTo(size.width * 0.85f, size.height * 0.4f); lineTo(size.width * 0.65f, size.height * 0.5f); close() }
-        drawPath(ave, Color(0xFFFCD116))
+        drawRect(Color(0xFF012169))
+        val thickW = size.height * 0.22f; val thinR = size.height * 0.08f
+        drawLine(Color.White, Offset(0f, 0f), Offset(size.width, size.height), thickW)
+        drawLine(Color.White, Offset(size.width, 0f), Offset(0f, size.height), thickW)
+        drawLine(Color(0xFFC8102E), Offset(0f, thinR), Offset(size.width, size.height + thinR), thinR)
+        drawLine(Color(0xFFC8102E), Offset(size.width, -thinR), Offset(0f, size.height - thinR), thinR)
+        drawRect(Color.White, Offset(size.width/2 - thickW/2, 0f), Size(thickW, size.height))
+        drawRect(Color.White, Offset(0f, size.height/2 - thickW/2), Size(size.width, thickW))
+        drawRect(Color(0xFFC8102E), Offset(size.width/2 - thinR*1.5f, 0f), Size(thinR*3, size.height))
+        drawRect(Color(0xFFC8102E), Offset(0f, size.height/2 - thinR*1.5f), Size(size.width, thinR*3))
     }
 }
-@Composable fun BanderaPNGConstraint(modifier: Modifier = Modifier) = ConstraintLayout(modifier) { val (l) = createRefs(); Box(Modifier.constrainAs(l){ centerTo(parent) }) { LienzoPNG() } }
+@Composable fun BanderaUK(modifier: Modifier = Modifier) = Box(modifier) { LienzoUK() }
