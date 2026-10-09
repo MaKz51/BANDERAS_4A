@@ -20,6 +20,7 @@ import kotlin.math.sin
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.material3.Surface
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.unit.dp
 
 fun Path.addStar(center: Offset, radiusOut: Float, radiusIn: Float, points: Int = 5) {
     val angleStep = Math.PI / points
@@ -40,7 +41,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaButanConstraint(
+                    BanderaNepal(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -50,36 +51,34 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun LienzoButan() {
-    Canvas(modifier = Modifier.fillMaxSize()) {
-        drawPath(Path().apply {
-            moveTo(0f, 0f); lineTo(size.width, 0f); lineTo(0f, size.height); close()
-        }, Color(0xFFFFD520))
+fun LienzoNepal() {
+    Canvas(modifier = Modifier.width(240.dp).height(290.dp)) {
+        val mid = size.height / 2f
 
         drawPath(Path().apply {
-            moveTo(size.width, 0f); lineTo(size.width, size.height); lineTo(0f, size.height); close()
-        }, Color(0xFFFF4E12))
+            moveTo(0f, 0f); lineTo(size.width * 0.92f, size.height * 0.40f); lineTo(size.width * 0.25f, size.height * 0.40f)
+            lineTo(size.width * 0.92f, size.height * 0.85f); lineTo(0f, size.height); close()
+        }, color = Color(0xFF003893))
 
         drawPath(Path().apply {
-            moveTo(size.width * 0.3f, size.height * 0.7f)
-            lineTo(size.width * 0.4f, size.height * 0.5f)
-            lineTo(size.width * 0.5f, size.height * 0.6f)
-            lineTo(size.width * 0.6f, size.height * 0.4f)
-            lineTo(size.width * 0.7f, size.height * 0.5f)
-            lineTo(size.width * 0.8f, size.height * 0.3f)
-        }, color = Color.White, style = Stroke(width = 15f))
+            moveTo(size.width * 0.05f, size.height * 0.05f)
+            lineTo(size.width * 0.80f, size.height * 0.38f); lineTo(size.width * 0.20f, size.height * 0.38f)
+            lineTo(size.width * 0.80f, size.height * 0.82f); lineTo(size.width * 0.05f, size.height * 0.95f); close()
+        }, color = Color(0xFFDC143C))
+
+        drawCircle(Color.White, radius = size.height * 0.06f, center = Offset(size.width * 0.25f, size.height * 0.25f))
+        drawCircle(Color.White, radius = size.height * 0.08f, center = Offset(size.width * 0.25f, size.height * 0.65f))
     }
 }
 
-@Composable fun BanderaButanConstraint(modifier: Modifier = Modifier) = ConstraintLayout(modifier) {
-    val (l) = createRefs(); Box(Modifier.constrainAs(l){ centerTo(parent) }) { LienzoButan() }
-}
+@Composable fun BanderaNepal(modifier: Modifier = Modifier) = Box(modifier) { LienzoNepal() }
+
 @Preview(showBackground = true)
 @Composable
 fun VistaPreviaBandera() {
     BANDERAS_MAXTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
-            BanderaButanConstraint()
+            BanderaNepal()
         }
     }
 }
