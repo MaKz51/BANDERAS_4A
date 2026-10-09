@@ -44,7 +44,7 @@ fun Path.addStar(center: Offset, radiusOut: Float, radiusIn: Float, points: Int 
 fun VistaPreviaBandera() {
     BANDERAS_MAXTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
-            BanderaUK()
+            BanderaUKConstraint()
         }
     }
 }
@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaUK(
+                    BanderaUKConstraint(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -78,4 +78,4 @@ fun LienzoUK() {
         drawRect(Color(0xFFC8102E), Offset(0f, size.height/2 - thinR*1.5f), Size(size.width, thinR*3))
     }
 }
-@Composable fun BanderaUK(modifier: Modifier = Modifier) = Box(modifier) { LienzoUK() }
+@Composable fun BanderaUKConstraint(modifier: Modifier = Modifier) = ConstraintLayout(modifier) { val (l) = createRefs(); Box(Modifier.constrainAs(l){ centerTo(parent) }) { LienzoUK() } }
