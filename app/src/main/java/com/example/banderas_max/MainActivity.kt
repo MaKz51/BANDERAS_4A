@@ -39,6 +39,7 @@ fun Path.addStar(center: Offset, radiusOut: Float, radiusIn: Float, points: Int 
     close()
 }
 
+
 @Preview(showBackground = true)
 @Composable
 fun VistaPreviaBandera() {
