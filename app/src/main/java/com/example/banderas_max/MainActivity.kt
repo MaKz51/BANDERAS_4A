@@ -27,12 +27,24 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 
+fun Path.addStar(center: Offset, radiusOut: Float, radiusIn: Float, points: Int = 5) {
+    val angleStep = Math.PI / points
+    var currentAngle = -Math.PI / 2.0
+    moveTo(center.x + (radiusOut * cos(currentAngle)).toFloat(), center.y + (radiusOut * sin(currentAngle)).toFloat())
+    for (i in 0 until points * 2) {
+        val r = if (i % 2 == 0) radiusOut else radiusIn
+        lineTo(center.x + (r * cos(currentAngle)).toFloat(), center.y + (r * sin(currentAngle)).toFloat())
+        currentAngle += angleStep
+    }
+    close()
+}
+
 @Preview(showBackground = true)
 @Composable
 fun VistaPreviaBandera() {
     BANDERAS_MAXTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
-            BanderaSeychelles()
+            BanderaPNG()
         }
     }
 }
@@ -43,7 +55,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaSeychelles(
+                    BanderaPNG(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -52,14 +64,18 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
-
 @Composable
-fun BanderaSeychelles(modifier: Modifier = Modifier) {
-    Box(modifier.fillMaxSize().background(Color(0xFF007A3D)), contentAlignment = Alignment.BottomStart) {
-        Box(Modifier.scale(2f).rotate(-15f).fillMaxSize().background(Color.White))
-        Box(Modifier.scale(2f).rotate(-35f).fillMaxSize().background(Color(0xFFD92223)))
-        Box(Modifier.scale(2f).rotate(-55f).fillMaxSize().background(Color(0xFFFCD116)))
-        Box(Modifier.scale(2f).rotate(-75f).fillMaxSize().background(Color(0xFF003F87)))
+fun LienzoPNG() {
+    Canvas(modifier = Modifier.fillMaxSize()) {
+        drawRect(Color.Black)
+        drawPath(Path().apply { moveTo(0f, 0f); lineTo(size.width, 0f); lineTo(size.width, size.height); close() }, Color(0xFFCE1126))
+        drawPath(Path().apply { addStar(Offset(size.width * 0.25f, size.height * 0.3f), 40f, 15f) }, Color.White)
+        drawPath(Path().apply { addStar(Offset(size.width * 0.35f, size.height * 0.5f), 30f, 12f) }, Color.White)
+        drawPath(Path().apply { addStar(Offset(size.width * 0.25f, size.height * 0.7f), 40f, 15f) }, Color.White)
+        drawPath(Path().apply { addStar(Offset(size.width * 0.15f, size.height * 0.5f), 40f, 15f) }, Color.White)
+
+        val ave = Path().apply { moveTo(size.width * 0.75f, size.height * 0.2f); lineTo(size.width * 0.85f, size.height * 0.4f); lineTo(size.width * 0.65f, size.height * 0.5f); close() }
+        drawPath(ave, Color(0xFFFCD116))
     }
 }
+@Composable fun BanderaPNG(modifier: Modifier = Modifier) = Box(modifier) { LienzoPNG() }
