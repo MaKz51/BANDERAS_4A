@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaNepal(
+                    BanderaNepalConstraint(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -71,14 +71,15 @@ fun LienzoNepal() {
     }
 }
 
-@Composable fun BanderaNepal(modifier: Modifier = Modifier) = Box(modifier) { LienzoNepal() }
-
+@Composable fun BanderaNepalConstraint(modifier: Modifier = Modifier) = ConstraintLayout(modifier) {
+    val (l) = createRefs(); Box(Modifier.constrainAs(l){ centerTo(parent) }) { LienzoNepal() }
+}
 @Preview(showBackground = true)
 @Composable
 fun VistaPreviaBandera() {
     BANDERAS_MAXTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
-            BanderaNepal()
+            BanderaNepalConstraint()
         }
     }
 }
