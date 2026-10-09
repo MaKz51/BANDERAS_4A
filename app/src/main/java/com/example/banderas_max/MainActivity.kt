@@ -19,6 +19,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.material3.Surface
+import androidx.compose.ui.graphics.drawscope.Stroke
 
 fun Path.addStar(center: Offset, radiusOut: Float, radiusIn: Float, points: Int = 5) {
     val angleStep = Math.PI / points
@@ -39,7 +40,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BANDERAS_MAXTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BanderaSudafricaConstraint(
+                    BanderaButan(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -49,45 +50,35 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun LienzoSudafrica() {
+fun LienzoButan() {
     Canvas(modifier = Modifier.fillMaxSize()) {
-        drawRect(color = Color(0xFF001489), size = Size(size.width, size.height / 2f))
-        drawRect(color = Color(0xFFFFB612), topLeft = Offset(0f, size.height / 2f), size = Size(size.width, size.height / 2f))
-
-        val apex = Offset(size.width * 0.36f, size.height / 2f)
-        val wWhite = size.height * 0.30f
-        val wGreen = size.height * 0.20f
-
-        fun drawPall(color: Color, width: Float) {
-            drawLine(color, Offset(0f, 0f), apex, width)
-            drawLine(color, Offset(0f, size.height), apex, width)
-            drawLine(color, apex, Offset(size.width, size.height / 2f), width)
-        }
-
-        drawPall(Color.White, wWhite)
-        drawPall(Color(0xFF007749), wGreen)
+        drawPath(Path().apply {
+            moveTo(0f, 0f); lineTo(size.width, 0f); lineTo(0f, size.height); close()
+        }, Color(0xFFFFD520))
 
         drawPath(Path().apply {
-            moveTo(0f, size.height * 0.17f)
-            lineTo(size.width * 0.26f, size.height / 2f)
-            lineTo(0f, size.height * 0.83f)
-            close()
-        }, Color.Black)
+            moveTo(size.width, 0f); lineTo(size.width, size.height); lineTo(0f, size.height); close()
+        }, Color(0xFFFF4E12))
+
+        drawPath(Path().apply {
+            moveTo(size.width * 0.3f, size.height * 0.7f)
+            lineTo(size.width * 0.4f, size.height * 0.5f)
+            lineTo(size.width * 0.5f, size.height * 0.6f)
+            lineTo(size.width * 0.6f, size.height * 0.4f)
+            lineTo(size.width * 0.7f, size.height * 0.5f)
+            lineTo(size.width * 0.8f, size.height * 0.3f)
+        }, color = Color.White, style = Stroke(width = 15f))
     }
 }
 
-@Composable
-fun BanderaSudafricaConstraint(modifier: Modifier = Modifier) = ConstraintLayout(modifier) {
-    val (l) = createRefs()
-    Box(Modifier.constrainAs(l){ centerTo(parent) }) { LienzoSudafrica() }
-}
+@Composable fun BanderaButan(modifier: Modifier = Modifier) = Box(modifier) { LienzoButan() }
 
 @Preview(showBackground = true)
 @Composable
 fun VistaPreviaBandera() {
     BANDERAS_MAXTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
-            BanderaSudafricaConstraint()
+            BanderaButan()
         }
     }
 }
